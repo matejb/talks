@@ -1,0 +1,73 @@
+.===============================================================================
+
+#space#
+.table
+.tr
+.td{text-align:center;}
+.css{
+  font-size: 12svh;
+  text-shadow: 0 0 3px #FFFFFF, 0 0 15px rgba(255, 255, 255, 1);
+}
+GoTalks 26.02.2026
+.css.end
+.tr
+.td{text-align:center;}
+.css{
+  padding-top: 0.5em;
+  font-size: 16svh;
+	color: #AA0000;
+  text-shadow: 0 0 3px #FFFFFF, 0 0 15px rgba(255, 255, 255, 1);
+}
+**Circus of fire and ash**
+.css.end
+.tr
+.td{text-align:center;}
+.css{
+  font-size: 10svh;
+	color: #000000;
+  text-shadow: 0 0 3px #FFFFFF, 0 0 15px rgba(255, 255, 255, 1);
+}
+On how we live and die in software engineering controlled by our own fallacies
+.css.end
+.table.end
+.slide.background(assets/intro.png)
+.===============================================================================
+.TITLE{How to reach us}
+
+#space#
+.css{text-align: center; display: flex;  justify-content: center; align-items: center;}
+.table
+.tr
+.td
+.image(assets/meetup.png :13svh)
+.td{text-align: left; padding-left: 5svw;}
+[meetup.com/Golang-ZG](https://www.meetup.com/Golang-ZG/)
+.tr
+.td{height: 13svh}
+.image(assets/youtube.svg :10svh)
+.td{text-align: left; padding-left: 5svw;}
+.{color:blue}(@)[golangzg](https://www.youtube.com/@golangzg)
+.tr
+.td
+.image(assets/github.svg :13svh)
+.td{text-align: left; padding-left: 5svw;}
+[github.com/golanghr/golangzg](https://github.com/golanghr/golangzg/blob/master/talks.md)
+.tr
+.td
+.image(assets/Bluesky_Logo.svg :13svh)
+.td{text-align: left; padding-left: 5svw;}
+.{color:blue}(@)[golangzg.bsky.social](https://bsky.app/profile/golangzg.bsky.social)
+.tr
+.td{height: 13svh}
+.image(assets/slack-new-logo.svg :12svh)
+.td{text-align: left; padding-left: 5svw;}
+[invite.slack.golangbridge.org](https://invite.slack.golangbridge.org/?fbclid=IwAR35p7rEaNkowXDxX8RvmWDvyhoAslx2QskpBBnHlVdKCXvRpCoxePMmHnA)
+.table.end
+.css.end
+.===============================================================================
+.TITLE{About me}
+
+Matej Baćo
+- Gopher since ~2015
+- 20 years in IT engineering / development
+- I'm a bit strange

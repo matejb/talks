@@ -1,0 +1,289 @@
+.===============================================================================
+.TITLEALT{Why this talk?}
+
+We stand at the gates of software's industrial age.
+Do we possess the wisdom required for it?
+
+.===============================================================================
+.TITLEALT{What lies ahead?}
+
+- Opposites are both true at different times and places
+- It is wise to hear or discuss someone's truth, but not necessarily accept it
+
+.===============================================================================
+.TITLEALT{Fallacies in business}
+
+A technical solution is the most important!
+.transition.clean
+
+.TITLEALT{Fallacies in business}
+
+~~A technical solution is the most important!~~
+Value produced for the customer is!
+
+.===============================================================================
+.TITLEALT{Fallacies in business}
+
+Time and place are not important.
+.transition.clean
+
+.TITLEALT{Fallacies in business}
+
+~~Time and place are not important.~~
+- What is your size?
+  - 2-person band / 10 / 200 / 200,000
+- When is "now"?
+- Where is "here"?
+  - IT agency / SaaS / your own product / government / medical / bank
+- Who are your customers?
+
+.===============================================================================
+.TITLEALT{Fallacies in business}
+
+I am valuable because?
+- I am fast
+- I am good
+.transition.clean
+
+.TITLEALT{Fallacies in business}
+
+I am valuable because?
+- ~~I am fast~~
+- ~~I am good~~
+
+- I bring value to the company
+
+.===============================================================================
+.TITLEALT{Fallacies in business}
+
+Outcomes are for business folk.
+.transition.clean
+
+.TITLEALT{Fallacies in business}
+
+~~Outcomes are for business folk.~~
+Without caring for the outcome, you cannot bring value.
+
+.===============================================================================
+.TITLEALT{Fallacies in collaboration}
+
+Waterfall / Scrum / Agile ™
+.transition.clean
+
+.TITLEALT{Fallacies in collaboration}
+
+~~Waterfall / Scrum / Agile ™~~
+The kind of collaboration that works for you and others at this time and place!
+
+.===============================================================================
+.TITLEALT{Fallacies in collaboration}
+
+Colleague/department for X:
+- database
+- security
+- Ops
+- QA
+- performance
+.transition.clean
+
+.TITLEALT{Fallacies in collaboration}
+
+~~Colleague/department for X~~
+Expertise is great when it is used and needed sparsely.
+
+.===============================================================================
+.TITLEALT{Fallacies in collaboration}
+
+The estimate is correct.
+.transition.clean
+
+.TITLEALT{Fallacies in collaboration}
+
+~~The estimate is correct.~~
+- Who asks?
+- Why do they ask?
+- Seeing is believing!
+- The correct scale is your friend
+
+.===============================================================================
+.TITLEALT{Fallacies in design}
+
+We need to prepare for the future.
+.transition.clean
+
+.TITLEALT{Fallacies in design}
+
+~~We need to prepare for the future.~~
+Design for the here and now.
+
+.===============================================================================
+.TITLEALT{Fallacies in design}
+
+The solution to a problem is obvious.
+.transition.clean
+
+.TITLEALT{Fallacies in design}
+
+~~The solution to a problem is obvious.~~
+Sit and come up with at least 3 solutions; stupid ones are allowed.
+
+.===============================================================================
+.TITLEALT{Fallacies in design}
+
+The end of a project is known.
+.transition.clean
+
+.TITLEALT{Fallacies in design}
+
+~~The end of a project is known~~
+- This is how EPIC legacy is created
+- Habitable code is a continuous effort
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+New tech is better than old tech!
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~New tech is better than old tech!~~
+- FOMO is real, I feel you ❤️
+- Would it bring value and how costly is it?
+- Can you make it cost less? 
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+Clean Code / DRY / SOLID / KISS / YAGNI / TDD / BDD / CI/CD / Pair programming / DDD / Microservices / SoC ™
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~Clean Code / DRY / SOLID / KISS / YAGNI / TDD / BDD / CI/CD / Pair programming / DDD / Microservices / SoC ™~~
+- Time and place!
+- Principles over rules!
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+The business domain is not relevant to the code.
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~The business domain is not relevant to the code~~
+You always have business domain even when you are not aware of it.
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+Automated testing is not worth it!
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~Automated testing is not worth it!~~
+- Simplest way to good interface
+- Repeatable
+- Time saver
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+Just use a library!
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~Just use a library!~~
+You OWN the faults of everything your code depends on because the customer does not care.
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+If a language feature exists, it is always good to use it.
+- goto
+- global vars
+- singleton pattern
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~If a language feature exists, it is always good to use it.~~
+In time and place!
+
+.===============================================================================
+.TITLEALT{Fallacies in coding}
+
+AI will make us great!
+.transition.clean
+
+.TITLEALT{Fallacies in coding}
+
+~~AI will make us great!~~
+AI is a force multiplier; it does 100x in the direction you point it. 
+
+.===============================================================================
+.TITLEALT{Fallacies in maintaining}
+
+Code that works should not be changed.
+.transition.clean
+
+.TITLEALT{Fallacies in maintaining}
+
+~~Code that works should not be changed.~~
+- Value changes
+- Time changes
+- Place changes
+- Habitable code is healthy
+
+.===============================================================================
+.TITLEALT{Fallacies in maintaining}
+
+Code is documentation.
+.transition.clean
+
+.TITLEALT{Fallacies in maintaining}
+
+~~Code is documentation.~~
+It can be, but does it answer why?
+
+.===============================================================================
+.TITLEALT{Fallacies in maintaining}
+
+Code freeze is a normal thing.
+.transition.clean
+
+.TITLEALT{Fallacies in maintaining}
+
+~~Code freeze is a normal thing~~
+- Code freeze is the cheapest method to minimize issues during a fixed time period
+- Are you wealthy enough to buy cheap?
+
+.===============================================================================
+.TITLEALT{Fallacies in maintaining}
+
+Performance does not matter.
+.transition.clean
+
+.TITLEALT{Fallacies in maintaining}
+
+~~Performance does not matter.~~
+It does if it is part of the value for the customer.
+
+.===============================================================================
+.TITLEALT{Fallacies in life}
+
+Development is work.
+.transition.clean
+
+.TITLEALT{Fallacies in life}
+
+~~Development is work.~~
+You are allowed to have fun!
+
+.===============================================================================
+.TITLEALT{Fallacies in life}
+
+Do not forget your own values!

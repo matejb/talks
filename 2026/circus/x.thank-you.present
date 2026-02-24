@@ -1,0 +1,16 @@
+.===============================================================================
+.TITLEALT{Thank you!}
+.center
+.css{
+  font-size: 18svh;
+  text-shadow: 0 0 3px #FFFFFF, 0 0 15px rgba(45, 111, 168, 1);
+  margin-top: 10svh;
+}
+**Thank you!**   😊
+.css.end
+.center.end
+
+
+.css{float: right; padding-top: 5em}
+Done with github.com/oktalz/present
+.css.end

@@ -1,5 +1,13 @@
 # talks
 
+## 2026
+
+- Circus of fire and ash
+  ```
+  go install github.com/oktalz/present@v1.5.3
+  present -g github.com/matejb/talks -d 2026/circus
+  ```
+
 ## 2021
 
 - [GoLearn - constants](https://talks.godoc.org/github.com/matejb/talks/2021/GoLearn/const.slide)
