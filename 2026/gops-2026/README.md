@@ -7,10 +7,10 @@ This talk surveys **8 common layout approaches**, from flat files to hexagonal a
 
 ## Slides
 
-Presented using [present](https://pkg.go.dev/golang.org/x/tools/present):
+Presented using [present](https://github.com/oktalz/present):
 
 ```
-go install golang.org/x/tools/cmd/present@latest
+go install github.com/oktalz/present@latest
 present .
 ```
 
