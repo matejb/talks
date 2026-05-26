@@ -22,12 +22,12 @@ Regardless of layout choice (according to me!):
 .transition
 
 2. **Use `cmd/`** for entry points when you have multiple binaries
-3. **Use `internal/`** if you **can't / won't** offer stabile libraries
+3. **Use `internal/`** if you **can't / won't** offer stable libraries
 
 .transition
 
 4. **Keep dependency arrows pointing inward** - domain shouldn't know about HTTP or Postgres
-5. **Binary entry point eq. `main.go` wires everything** - dependency injection at the composition root
+5. **Binary entry point e.g. `main.go` wires everything** - dependency injection at the composition root
 
 .transition
 

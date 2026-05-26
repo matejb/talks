@@ -1,7 +1,7 @@
 .===============================================================================
 .TITLE{Layout #3 WK - Package-Oriented Design}
 
-William Kennedy from Ardian Labs "Package-Oriented Design" (2017)
+William Kennedy from Ardan Labs "Package-Oriented Design" (2017)
 
 .notes
 Very popular in enterprise Go.
@@ -124,6 +124,6 @@ func main() {
 .TITLE{Kennedy - When it breaks}
 
 - `internal/platform/` can become a "junk drawer"
-- Domain packages **may** eq. directly import `database/sql`, nothing is preventing "infrastructure" to leak into domain
+- Domain packages **may** e.g. directly import `database/sql`, nothing is preventing "infrastructure" to leak into domain
 - No prescribed way to **share** common libraries between repos
 - Overkill for small services

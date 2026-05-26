@@ -142,6 +142,6 @@ func main() {
 .TITLE{BJ - Historical significance}
 
 - The root package **IS** the domain
-- Root package is named by what the project and domain is eq. `library`
+- Root package is named by what the project and domain is e.g. `library`
 - The core insight: **"domain in root, implementations in leaf packages, main wires them"** appears in hexagonal, clean, and feature-based layouts
 - First introduced in "Structuring Applications in Go" (2014), then refined in "Standard Package Layout" (2016)
