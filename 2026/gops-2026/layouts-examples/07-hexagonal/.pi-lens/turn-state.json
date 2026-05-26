@@ -1,0 +1,148 @@
+{
+  "files": {
+    "internal/core/port/review_repository.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 14
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:03.777Z"
+    },
+    "internal/core/port/book_repository.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 16
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:03.786Z"
+    },
+    "internal/core/port/user_repository.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 15
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:03.792Z"
+    },
+    "internal/core/service/book_service.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 63
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:27.577Z"
+    },
+    "internal/core/service/user_service.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 34
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:27.588Z"
+    },
+    "internal/core/service/review_service.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 29
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:27.596Z"
+    },
+    "internal/adapter/out/memory/book_repository.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 71
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:01:00.381Z"
+    },
+    "internal/adapter/out/memory/review_repository.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 49
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:01:00.385Z"
+    },
+    "internal/adapter/out/memory/user_repository.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 61
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:01:00.390Z"
+    },
+    "internal/adapter/in/http/book_handler.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 85
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:02:07.976Z"
+    },
+    "internal/adapter/in/http/review_handler.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 70
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:02:31.804Z"
+    },
+    "internal/adapter/in/http/user_handler.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 66
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:01:36.109Z"
+    },
+    "cmd/server/main.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 45
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:03:26.228Z"
+    },
+    "internal/core/service/service_test.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 230
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:04:03.686Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-05-26T10:04:03.686Z",
+  "sessionId": "lens-mpmgqt8p-9f318b39"
+}

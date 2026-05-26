@@ -1,0 +1,112 @@
+.===============================================================================
+.TITLE{Layout #8 - Monorepo / Go Workspaces}
+
+Go 1.18 workspaces (2022), matured through Go 1.23–1.24
+
+.notes
+go.work was THE biggest structural addition to Go since modules.
+.notes.end
+
+.===============================================================================
+.TITLE{Monorepo - Directory structure}
+
+```shell
+library-monorepo/
+├── go.work
+├── services/
+│   ├── api/                    # HTTP API service
+│   │   ├── go.mod
+│   │   └── cmd/api/main.go
+│   └── worker/                 # Background job worker
+│       ├── go.mod
+│       └── cmd/worker/main.go
+├── libs/                       # Shared libraries
+│   ├── library/                # Domain types & interfaces
+│   │   ├── go.mod
+│   │   ├── book.go
+│   │   └── user.go
+│   └── dbutil/                 # Database utilities
+│       ├── go.mod
+│       └── dbutil.go
+└── tools/                      # Development tools
+    └── migrate/
+        ├── go.mod
+        └── main.go
+```
+
+.===============================================================================
+.TITLE{Monorepo - go.work}
+
+```go
+// go.work
+go 1.24
+
+use (
+    ./services/api
+    ./services/worker
+    ./libs/library
+    ./libs/dbutil
+    ./tools/migrate
+)
+```
+
+```go
+// services/api/cmd/api/main.go
+package main
+
+import (
+    "github.com/example/libs/library"
+    "github.com/example/libs/dbutil"
+)
+
+func main() {
+    db := dbutil.MustOpen("connection")
+    _ = library.Book{Title: "Go 101"}
+    // ...
+}
+```
+
+.===============================================================================
+.TITLE{Monorepo - Two strategies}
+
+**Strategy A: Multi-module (go.work)**
+- Each service and library has its own `go.mod`
+- `go.work` ties them together for local dev
+- Pros: Independent versioning, clear boundaries
+- Cons: More setup, module management overhead
+
+.===============================================================================
+.TITLE{Monorepo - Two strategies}
+
+**Strategy B: Single-module monorepo**
+- One `go.mod` at root, everything is a package
+- Use `internal/` for boundaries
+- Pros: Simpler, no module management
+- Cons: Everything rebuilds together, no independent versioning
+
+```
+library-monorepo/
+├── go.mod              # ONE module for everything
+├── services/
+│   ├── api/main.go     # package main
+│   └── worker/main.go  # package main
+├── internal/
+│   ├── user/
+│   ├── book/
+│   └── review/
+└── pkg/dbutil/
+```
+
+.===============================================================================
+.TITLE{Monorepo - When it works / breaks}
+
+**Works when:**
+- Multiple deployable services sharing domain logic
+- Organization with 3+ Go services
+- Different services have different release cycles
+
+.transition
+
+**Breaks when:**
+- Single / Few services - monorepo adds complexity for no benefit
+- Teams can't agree on shared library versions

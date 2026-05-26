@@ -1,0 +1,18 @@
+{
+  "files": {
+    "internal/handler/handler_test.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 202
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:02:25.273Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-05-26T10:02:25.273Z",
+  "sessionId": "lens-mpmgr36q-9384ff33"
+}

@@ -1,0 +1,8 @@
+go 1.24
+
+use (
+	./libs/library
+	./libs/dbutil
+	./services/api
+	./services/worker
+)

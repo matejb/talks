@@ -1,0 +1,64 @@
+.===============================================================================
+.TITLE{Layout #1 - Flat / No Structure}
+
+Also known as "Simple Layout"<br/>by Peter Bourgon, "Go in Production" (talk at GopherCon 2014)
+
+.===============================================================================
+.TITLE{Flat - Directory structure}
+
+```shell
+.
+├── main.go
+├── user.go
+├── book.go
+├── review.go
+├── handler.go
+└── go.mod
+```
+
+Everything in `package main`.
+
+.===============================================================================
+.TITLE{Flat - main.go}
+
+```go
+package main
+
+import (
+    "database/sql"
+    "log"
+    "net/http"
+    _ "github.com/lib/pq"
+)
+
+func main() {
+    db, err := sql.Open("postgres", "connection string")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    us := &userService{DB: db}
+    bs := &bookService{DB: db}
+    rs := &reviewService{DB: db}
+
+    h := handler{Users: us, Books: bs, Reviews: rs}
+    log.Fatal(http.ListenAndServe(":8080", h))
+}
+```
+
+.===============================================================================
+.TITLE{Flat - When it works}
+
+- Prototypes and hackathons
+- Small CLI tools (under ~10 files)
+- Learning projects
+- When you genuinely don't know the domain yet
+
+.===============================================================================
+.TITLE{Flat - When it breaks}
+
+- More than ~10 files - hard to find things
+- Multiple developers - merge conflicts everywhere
+- Need for test isolation - can't swap implementations
+- Reusable logic - everything is `package main`

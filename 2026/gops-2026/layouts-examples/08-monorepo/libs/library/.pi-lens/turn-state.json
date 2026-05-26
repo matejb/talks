@@ -1,0 +1,28 @@
+{
+  "files": {
+    "store.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 170
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:48.488Z"
+    },
+    "store_test.go": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 143
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-05-26T10:00:48.493Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-05-26T10:00:48.493Z",
+  "sessionId": "lens-mpmgr36q-9384ff33"
+}

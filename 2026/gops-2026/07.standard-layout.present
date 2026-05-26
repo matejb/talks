@@ -1,0 +1,59 @@
+.===============================================================================
+.TITLE{Layout #5 - golang-standards/project-layout}
+
+Community repo on GitHub (~56k stars)
+**Not** an official Go standard despite the name.
+
+.===============================================================================
+.TITLE{Standard Layout - The full menu}
+
+```shell
+.
+├── cmd/           # Main applications (each subdir = one binary)
+├── internal/      # Private application code
+├── pkg/           # "Reusable packages" (debated)
+├── api/           # API protocol definitions
+├── web/           # Web assets
+├── configs/       # Configuration files
+├── scripts/       # Build/deploy scripts
+├── test/          # Additional integration tests
+├── docs/          # Documentation
+├── build/         # Build output
+└── deployments/   # Docker, K8s manifests
+```
+
+.===============================================================================
+.TITLE{Standard Layout - The critical perspective}
+
+> "It is not an official Go standard, despite the name, so beginners can mistake it for endorsed guidance."
+> - Hacker News (2021)
+
+.transition
+
+> "The layout can encourage cargo-cult programming: people copy the structure because it looks professional, not because they understand the tradeoffs."
+> - kau.sh (2024)
+
+.===============================================================================
+.TITLE{Standard Layout - Verdict?}
+
+**Problems:**
+- Misleading name - "golang-standards" implies official endorsement
+- `pkg/` is outdated with Go modules
+- Over-engineered for most projects
+- Cargo cult adoption - copied without understanding
+
+.transition
+
+.TITLE{Standard Layout - Contarversion}
+
+**But also:**
+- 56k stars means many people find it useful
+- Individual directory conventions are fine on their own
+- Best treated as a **menu**, not a blueprint
+- When you DO need `/api/`, `/deployments/`, etc. - this shows where they go
+
+.notes
+BE BALANCED - don't just bash it. The key critique is the NAME and the
+CARGO CULT behavior, not necessarily the content. The problem is copying
+ALL of them at project start.
+.notes.end

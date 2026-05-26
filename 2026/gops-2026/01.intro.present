@@ -1,0 +1,107 @@
+.===============================================================================
+
+#space#
+.table{width: 100%; padding-top: 3em;}
+.tr
+.td{text-align: center;}
+.css{
+  font-size: 12svh;
+	color: #FFFFFF;
+  text-shadow: 0 0 5px #000000, 0 0 15px #0047AB;
+}
+GoTalks 28.05.2026
+.css.end
+.tr
+.td{text-align:center;}
+.css{
+  padding-top: 0.5em;
+  font-size: 10svh;
+	color: #FFFFFF;
+  text-shadow: 0 0 3px #000000, 0 0 15px #0047AB;
+}
+**Go Project Structures**
+.css.end
+.tr
+.td{text-align:center;}
+.css{
+  font-size: 6svh;
+	color: #FFFFFF;
+  text-shadow: 0 0 3px #000000, 0 0 15px #0047AB;
+}
+Breakdown of most common ones
+.css.end
+.table.end
+.slide.background(assets/intro.jpeg)
+
+.===============================================================================
+.MEETUP_TITLE{How to reach us}
+
+#space#
+.css{text-align: center; display: flex;  justify-content: center; align-items: center;}
+.table
+.tr
+.td
+.image(assets/meetup.png :13svh)
+.td{text-align: left; padding-left: 5svw;}
+[meetup.com/Golang-ZG](https://www.meetup.com/Golang-ZG/)
+.tr
+.td{height: 13svh}
+.image(assets/youtube.svg :10svh)
+.td{text-align: left; padding-left: 5svw;}
+.{color:blue}(@)[golangzg](https://www.youtube.com/@golangzg)
+.tr
+.td
+.image(assets/github.svg :13svh)
+.td{text-align: left; padding-left: 5svw;}
+[github.com/golanghr/golangzg](https://github.com/golanghr/golangzg/blob/master/talks.md)
+.tr
+.td
+.image(assets/Bluesky_Logo.svg :13svh)
+.td{text-align: left; padding-left: 5svw;}
+.{color:blue}(@)[golangzg.bsky.social](https://bsky.app/profile/golangzg.bsky.social)
+.tr
+.td{height: 13svh}
+.image(assets/slack-new-logo.svg :12svh)
+.td{text-align: left; padding-left: 5svw;}
+[invite.slack.golangbridge.org](https://invite.slack.golangbridge.org/)
+.table.end
+.css.end
+
+.===============================================================================
+.TITLE{About me}
+
+Matej Baćo
+- Gopher since ~2015
+- ~20 years in IT engineering / development
+- I'm a bit strange
+
+.===============================================================================
+.TITLE{The question}
+
+.center
+.css{font-size: 6svh; margin-top: 5svh;}
+Go has no official project structure.
+.css.end
+.center.end
+
+.center
+.css{font-size: 8svh; margin-top: 3svh; color: #AA0000;}
+**So… what do I do?**
+.css.end
+.center.end
+
+.notes
+Relate to the audience: everyone has asked "where do I put this file?" in Go.
+Go's lack of a prescribed structure is intentional - it's about choosing what fits YOUR project.
+.notes.end
+
+.===============================================================================
+.TITLE{What we'll cover}
+
+- 8 layout approaches using same example app
+- From flat structure to hexagonal architecture
+- Popular layouts from 2014 to today (2026)
+- **My** take on prominent common Go project layouts
+- In the wild there are mixes
+- Some I did not encounter for sure
+- If you have favorit layout I did not list, show us!

@@ -1,0 +1,299 @@
+.===============================================================================
+.TITLE{Layout #7 Hexagonal / Ports & Adapters}
+
+Alistair Cockburn (2005), adapted for Go (2022–2026)
+Also known as: Ports & Adapters
+
+Related: Onion Architecture (Palermo 2008), Clean Architecture (R. Martin 2012)
+
+> "Code pertaining to the 'inside' part should not leak into the 'outside' part."
+> - Alistair Cockburn (2005)
+
+In practice: the domain core has ZERO external dependencies. Everything else is an adapter.
+
+.===============================================================================
+.TITLE{Layout #7 Hexagonal / Ports & Adapters}
+
+.image(assets/hexagonal.jpeg)
+
+.===============================================================================
+.TITLE{Hexagonal - Why "hexagonal"?}
+
+The shape is a visual metaphor to break free from layered (top-to-bottom) thinking.
+
+It allows the people doing the drawing to have room to insert ports and adapters.
+
+It makes the **inside-outside** asymmetry obvious and leaves room for multiple ports.
+
+Most apps have 2–4 ports (Cockburn has never encountered more than four).
+
+.===============================================================================
+.TITLE{Hexagonal - Directory structure}
+
+```shell
+.
+├── cmd/
+│   └── server/
+│       └── main.go              # Composition root
+├── internal/
+│   ├── core/
+│   │   ├── domain/              # Entities & value objects
+│   │   │   ├── book.go
+│   │   │   ├── user.go
+│   │   │   └── review.go
+│   │   ├── port/                # Interfaces (contracts)
+│   │   │   ├── book_repository.go
+│   │   │   ├── user_repository.go
+│   │   │   └── book_service.go  # use case (inbound port)
+│   │   └── service/             # Business logic / use cases
+│   │       ├── book_service.go
+│   │       └── user_service.go
+│   └── adapter/
+│       ├── in/                  # Driving adapters (inbound)
+│       │   └── http/
+│       │       ├── book_handler.go
+│       │       └── router.go
+│       └── out/                 # Driven adapters (outbound)
+│           ├── postgres/
+│           │   ├── book_repository.go
+│           │   └── user_repository.go
+│           └── memory/          # In-memory for tests
+│               ├── book_repository.go
+│               └── user_repository.go
+└── go.mod
+```
+
+.===============================================================================
+.TITLE{Hexagonal - Domain core (zero dependencies)}
+
+```go
+// internal/core/domain/book.go
+package domain
+
+type Book struct {
+    ID       int
+    Title    string
+    Author   string
+    Borrower *User
+}
+```
+
+```go
+// internal/core/port/book_repository.go - outbound port
+package port
+
+import (
+    "context"
+    "github.com/example/internal/core/domain"
+)
+
+type BookRepository interface {
+    ByID(ctx context.Context, id int) (domain.Book, error)
+    All(ctx context.Context) ([]domain.Book, error)
+    Save(ctx context.Context, book domain.Book) error
+    Update(ctx context.Context, book domain.Book) error
+}
+```
+
+.===============================================================================
+.TITLE{Hexagonal - Business logic}
+
+```go
+// internal/core/service/book_service.go
+package service
+
+import (
+    "context"
+    "fmt"
+    "github.com/example/internal/core/domain"
+    "github.com/example/internal/core/port"
+)
+
+type BookService struct {
+    books port.BookRepository
+    users port.UserRepository
+}
+
+func (s *BookService) Borrow(ctx context.Context, bookID, userID int) error {
+    book, err := s.books.ByID(ctx, bookID)
+    if err != nil {
+        return fmt.Errorf("find book: %w", err)
+    }
+    if book.Borrower != nil {
+        return fmt.Errorf("book already borrowed")
+    }
+
+    user, err := s.users.ByID(ctx, userID)
+    if err != nil {
+        return fmt.Errorf("find user: %w", err)
+    }
+
+    book.Borrower = &user
+    return s.books.Update(ctx, book)
+}
+```
+
+.===============================================================================
+.TITLE{Hexagonal - Outbound adapter (PostgreSQL)}
+
+```go
+// internal/adapter/out/postgres/book_repository.go
+package postgres
+
+import (
+    "context"
+    "database/sql"
+    "github.com/example/internal/core/domain"
+    "github.com/example/internal/core/port"
+)
+
+// Compile-time check: implements port.BookRepository
+var _ port.BookRepository = (*BookRepository)(nil)
+
+type BookRepository struct { db *sql.DB }
+
+func (r *BookRepository) ByID(ctx context.Context, id int) (domain.Book, error) {
+    var b domain.Book
+    err := r.db.QueryRowContext(ctx,
+        "SELECT id, title, author FROM books WHERE id = $1", id,
+    ).Scan(&b.ID, &b.Title, &b.Author)
+    return b, err
+}
+```
+
+.===============================================================================
+.TITLE{Hexagonal - Inbound adapter (HTTP)}
+
+```go
+// internal/adapter/in/http/book_handler.go
+package http
+
+import (
+    "encoding/json"
+    "net/http"
+    "github.com/example/internal/core/service"
+)
+
+type BookHandler struct {
+    svc *service.BookService
+}
+
+func (h *BookHandler) Routes() map[string]http.HandlerFunc {
+    return map[string]http.HandlerFunc{
+        "GET /books/{id}":        h.get,
+        "POST /books/{id}/borrow": h.borrow,
+    }
+}
+
+func (h *BookHandler) get(w http.ResponseWriter, r *http.Request) {
+    id, _ := strconv.Atoi(r.PathValue("id"))
+    book, err := h.svc.Get(r.Context(), id)
+    if err != nil {
+        http.Error(w, "not found", 404)
+        return
+    }
+    json.NewEncoder(w).Encode(book)
+}
+```
+
+.===============================================================================
+.TITLE{Hexagonal - Composition root}
+
+```go
+// cmd/server/main.go - THE ONLY PLACE that knows about concrete types
+package main
+
+import (
+    "log"
+    "net/http"
+    "database/sql"
+    _ "github.com/lib/pq"
+
+    "github.com/example/internal/adapter/in/http"
+    "github.com/example/internal/adapter/out/postgres"
+    "github.com/example/internal/core/service"
+)
+
+func main() {
+    db, _ := sql.Open("postgres", "connection")
+
+    // Outbound adapters (choose implementation)
+    bookRepo := postgres.NewBookRepository(db)
+    userRepo := postgres.NewUserRepository(db)
+    // OR for testing: bookRepo := memory.NewBookRepository()
+
+    // Core services (pure business logic)
+    bookSvc := service.NewBookService(bookRepo, userRepo)
+
+    // Inbound adapters
+    bookHandler := http.NewBookHandler(bookSvc)
+
+    mux := http.NewServeMux()
+    for pattern, handler := range bookHandler.Routes() {
+        mux.HandleFunc(pattern, handler)
+    }
+    log.Fatal(http.ListenAndServe(":8080", mux))
+}
+```
+
+.===============================================================================
+.TITLE{Hexagonal - The killer feature: testing}
+
+```go
+// internal/adapter/out/memory/book_repository.go - test double
+package memory
+
+type BookRepository struct {
+    books map[int]domain.Book
+}
+
+func (r *BookRepository) ByID(_ context.Context, id int) (domain.Book, error) {
+    b, ok := r.books[id]
+    if !ok { return domain.Book{}, fmt.Errorf("not found") }
+    return b, nil
+}
+```
+
+```go
+// Test - no database needed!
+func TestBorrowBook(t *testing.T) {
+    bookRepo := memory.NewBookRepository()
+    userRepo := memory.NewUserRepository()
+    svc := service.NewBookService(bookRepo, userRepo)
+
+    bookRepo.Save(context.Background(), domain.Book{ID: 1, Title: "Go 101"})
+    err := svc.Borrow(context.Background(), 1, 42)
+    assert.NoError(t, err)
+}
+```
+
+.notes
+DEMO the testing advantage - this is the killer feature of hexagonal.
+Show the compile-time interface check.
+Emphasize: internal/core/ has ZERO imports from adapter/.
+.notes.end
+
+.===============================================================================
+.TITLE{Hexagonal - When it works}
+
+- Services with clear business rules protected from infrastructure changes
+- Multiple implementations of the same port (Postgres, In-memory)
+- Tests that need to replace some external systems
+- APIs that might change transport (HTTP, gRPC)
+
+.===============================================================================
+.TITLE{Hexagonal - When it breaks}
+
+- CRUD-only services - abstraction overhead isn't worth it
+- Small teams - extra indirection slows development
+- Risk of "architecture astronaut" behavior
+- Simple scripts and tools
+
+.===============================================================================
+.TITLE{Hexagonal - 2026 perspective}
+
+> "Hexagonal architecture in Go is about keeping business logic pure while making infrastructure pluggable. It's not about folder names. It's about dependency direction."
+> - Community interpretation (2024–2025)
+
+> "Clean Architecture struggles in Golang because Go's philosophy favors simplicity over abstraction layers."
+> - Lucas de Ataides, dev.to (2024)

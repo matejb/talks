@@ -1,0 +1,67 @@
+.===============================================================================
+.TITLE{The example application}
+
+An office library web app:
+- Users browse books
+- Users borrow and return books
+- Users write reviews
+
+.notes
+Keep this simple - it's the same domain from the 2019 version of this talk.
+The same business logic will be organized differently in each layout.
+.notes.end
+
+.===============================================================================
+.TITLE{Domain type User}
+
+```go
+// User represents a library member
+type User struct {
+    ID    int
+    Name  string
+    Email string
+}
+
+type UserService interface {
+    User(id int) (User, error)
+    Users() ([]User, error)
+    CreateUser(user User) error
+}
+```
+
+.===============================================================================
+.TITLE{Domain type Book}
+
+```go
+type Book struct {
+    ID       int
+    Title    string
+    Author   string
+    Borrowed *User
+}
+
+type BookService interface {
+    Book(id int) (Book, error)
+    Books() ([]Book, error)
+    Borrow(bookID int, userID int) error
+    Return(bookID int) error
+}
+```
+
+.===============================================================================
+.TITLE{Domain type Review}
+
+```go
+type Review struct {
+    ID     int
+    BookID int
+    UserID int
+    Text   string
+    Rating int
+}
+
+type ReviewService interface {
+    Reviews(bookID int) ([]Review, error)
+    CreateReview(review Review) error
+}
+```

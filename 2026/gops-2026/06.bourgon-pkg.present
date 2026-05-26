@@ -1,0 +1,58 @@
+.===============================================================================
+.TITLE{Layout #4 PB - Complex Layout}
+
+Peter Bourgon "Go Best Practices 2016"<br/>
+The `pkg/` convention - everything importable goes under `pkg/`.
+
+.===============================================================================
+.TITLE{Bourgon - Directory structure}
+
+```shell
+.
+├── cmd/
+│   └── server/
+│       └── main.go
+├── pkg/
+│   ├── http/
+│   │   ├── handler.go
+│   │   └── server.go
+│   ├── library/
+│   │   ├── book.go
+│   │   ├── user.go
+│   │   └── review.go
+│   └── postgres/
+│       ├── user_service.go
+│       ├── book_service.go
+│       └── review_service.go
+└── go.mod
+```
+
+.===============================================================================
+.TITLE{The pkg/ debate}
+
+> "`pkg/` doesn't make much sense with Go modules. In the GOPATH era, `pkg/` separated pre-compiled packages. With modules, this distinction doesn't exist."
+> - Eli Bendersky (2019)
+
+.transition
+
+> "Don't use a `pkg/` directory. It's a convention from pre-modules Go
+> that doesn't provide any benefit today."
+> - Reddit r/golang (2024)
+
+.transition
+
+> "`pkg/` is useful in monorepos to distinguish between internal
+> application code and shared library code."
+> - Some teams still defend it
+
+.notes
+Show this as a historical stepping stone.
+The pkg/ debate is one of the most heated in Go project structure discussions.
+.notes.end
+
+.===============================================================================
+.TITLE{Bourgon - Verdict}
+
+- Popular in monorepos where multiple binaries share packages
+- **`pkg/` is semantically meaningless with Go modules** - single-binary apps don't need it
+- Peter Bourgon himself has moved toward simpler layouts

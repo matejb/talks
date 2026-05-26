@@ -1,0 +1,55 @@
+.===============================================================================
+.TITLE{Key takeaways}
+
+1. **There is no One True Layout™** - Go gives you freedom, use it wisely
+
+.transition
+
+.TITLE{Key takeaways}
+
+2. **The community has evolved** - from "copy this template" to "start simple, grow when needed"
+
+.transition
+
+.TITLE{Key takeaways}
+
+3. **Dependency direction matters more than directory names** - domain logic should never import infrastructure
+
+.transition
+
+.TITLE{Key takeaways}
+
+4. **The best layout is the one your team can maintain** - consistency beats perfection
+5. **Go 1.22+ changes the game** - stdlib routing means fewer third-party deps and simpler structures
+
+.===============================================================================
+.TITLE{Older layouts resources}
+
+- Ben Johnson - [Standard Package Layout](https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1)
+- William Kennedy - [Package-Oriented Design](https://www.ardanlabs.com/blog/2017/02/package-oriented-design.html)
+- Peter Bourgon - [Go Best Practices](https://peter.bourgon.org/go-best-practices-2016/)
+
+.===============================================================================
+.TITLE{Newer layouts resources}
+
+- Alex Edwards - [11 Tips for Structuring Your Go Projects](https://www.alexedwards.net/blog/11-tips-for-structuring-your-go-projects)
+- LaurentSV - [No-Nonsense Go Package Layout](https://laurentsv.com/blog/2024/10/19/no-nonsense-go-package-layout.html)
+- Mat Ryer - [How I Write HTTP Services After 13 Years](https://grafana.com/blog/how-i-write-http-services-in-go-after-13-years/)
+- Go Blog - [Routing Enhancements](https://go.dev/blog/routing-enhancements)
+- Go Docs - [Tutorial: Workspaces](https://go.dev/doc/tutorial/workspaces)
+
+.===============================================================================
+.TITLE{Critical perspectives}
+
+- Waken Dev - [Go Project Layout Controversy](https://waken.dev/posts/go-project-layout-controversy/)
+- Kaushik Gopal - [Cargo Culting](https://kau.sh/blog/cargo-culting/)
+- Lucas de Ataides - [Why Clean Architecture Struggles in Golang](https://dev.to/lucasdeataides/why-clean-architecture-struggles-in-golang-and-what-works-better-m4g)
+
+.===============================================================================
+.TITLE{Closing quote}
+
+.center
+.css{font-size: 4svh; margin-top: 10svh;}
+> "A good project structure is like good error handling, you only notice it when it's missing."
+.css.end
+.center.end

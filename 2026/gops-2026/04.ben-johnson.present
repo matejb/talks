@@ -1,0 +1,147 @@
+.===============================================================================
+.TITLE{Layout #2 BJ Standard Package Layout}
+
+Ben Johnson, "Standard Package Layout" (2016)<br />
+The single most influential Go project layout.
+
+.notes
+Almost every modern layout is a variation of this pattern.
+.notes.end
+
+.===============================================================================
+.TITLE{BJ - Directory structure}
+
+```shell
+.
+├── cmd/
+│   └── server/
+│       └── main.go
+├── user.go            # domain types & interfaces (root package)
+├── book.go
+├── review.go
+├── http/              # HTTP transport
+│   ├── handler.go
+│   └── server.go
+├── postgres/          # storage implementation
+│   ├── user_service.go
+│   ├── book_service.go
+│   └── review_service.go
+└── mock/              # test doubles
+    ├── user.go
+    ├── book.go
+    └── review.go
+```
+
+.===============================================================================
+.TITLE{BJ - Key idea: Dependency Inversion}
+
+```mermaid
+graph LR
+    HTTP[http handler] --> ROOT[domain]
+    POSTGRES[postgres storage] --> ROOT
+```
+
+.===============================================================================
+.TITLE{BJ - Key idea: Dependency Inversion}
+
+Both `http/` and `postgres/` depend on the root package (the domain).
+
+**The root package depends on NOTHING.**
+
+.notes
+Emphasize the dependency arrow diagram - this is THE key insight.
+Show that the root package has zero imports from http/ or postgres/.
+.notes.end
+
+.===============================================================================
+.TITLE{BJ - Domain in root package}
+
+```go
+// user.go - root package, no external imports
+package library
+
+type User struct {
+    ID    int
+    Name  string
+    Email string
+}
+
+type UserService interface {
+    User(id int) (User, error)
+    Users() ([]User, error)
+    CreateUser(user User) error
+}
+```
+
+.===============================================================================
+.TITLE{BJ - Implementation in leaf packages}
+
+```go
+// postgres/user_service.go
+package postgres
+
+import (
+    "database/sql"
+    "github.com/myorg/library"
+)
+
+type UserService struct {
+    DB *sql.DB
+}
+
+func (us *UserService) User(id int) (library.User, error) {
+    // SQL query here
+    return library.User{}, nil
+}
+```
+
+.===============================================================================
+.TITLE{BJ - Composition root}
+
+```go
+// cmd/server/main.go - wires everything together
+package main
+
+import (
+    "log"
+    "net/http"
+    "github.com/myorg/library/http"
+    "github.com/myorg/library/postgres"
+)
+
+func main() {
+    db, _ := postgres.Open("connection")
+    us := &postgres.UserService{DB: db}
+    bs := &postgres.BookService{DB: db}
+
+    h := &http.Handler{
+        UserService: us,
+        BookService: bs,
+    }
+    log.Fatal(http.ListenAndServe(":8080", h))
+}
+```
+
+.===============================================================================
+.TITLE{BJ - When it works}
+
+- Small-to-medium web services
+- When you want testability
+- When you want domain separated from "infrastructure"
+- The "next step up" from flat layout
+
+.===============================================================================
+.TITLE{BJ - When it breaks}
+
+- Root package can get large
+- No `internal/` - all packages importable externally and need to be supported
+- Multiple domains compete in the same root package
+- `mock/` package grows unbounded
+
+.===============================================================================
+.TITLE{BJ - Historical significance}
+
+- The root package **IS** the domain
+- Root package is named by what the project and domain is eq. `library`
+- The core insight: **"domain in root, implementations in leaf packages, main wires them"** appears in hexagonal, clean, and feature-based layouts
+- First introduced in "Structuring Applications in Go" (2014), then refined in "Standard Package Layout" (2016)

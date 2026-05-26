@@ -1,0 +1,59 @@
+.===============================================================================
+.TITLE{Bonus - Go 1.22+ Standard Library Routing}
+
+Go 1.22 eliminated the need for 3rd-party routers.
+
+.notes
+This is a quick but important point - Go's standard library keeps eating the ecosystem.
+.notes.end
+
+.===============================================================================
+.TITLE{Before Go 1.22 - Third-party router required}
+
+```go
+// Required: chi, gorilla/mux, echo, gin, fiber, etc.
+r := chi.NewRouter()
+r.Get("/users/{id}", getUser)
+r.Post("/users", createUser)
+```
+
+Impact on structure: you needed a `router/` or `transport/` package
+to encapsulate the third-party dependency.
+
+.transition
+
+.TITLE{After Go 1.22 - Standard library does it all}
+
+```go
+mux := http.NewServeMux()
+mux.HandleFunc("GET /users", listUsers)
+mux.HandleFunc("GET /users/{id}", getUser)
+mux.HandleFunc("POST /users", createUser)
+mux.HandleFunc("GET /books/{path...}", getBook)  // wildcard
+
+// In handlers:
+func getUser(w http.ResponseWriter, r *http.Request) {
+    id := r.PathValue("id")  // built-in path parameter access
+}
+```
+
+.===============================================================================
+.TITLE{Routing - Structural impact}
+
+- **No third-party router dependency** - one less package to organize
+- **Method-based patterns** (`"GET /users"`) - handlers can be plain functions
+- **Path parameters built-in** - no request context middleware needed
+- **Handlers can live closer to domain** - fewer indirection layers
+
+```go
+// internal/user/handler.go - clean, no external router dependency
+package user
+
+func Routes(svc *Service) map[string]http.HandlerFunc {
+    return map[string]http.HandlerFunc{
+        "GET /users":      List(svc),
+        "GET /users/{id}": Get(svc),
+        "POST /users":     Create(svc),
+    }
+}
+```

@@ -1,0 +1,194 @@
+.===============================================================================
+.TITLE{Layout #6 Feature-Based / Domain-Driven}
+
+Multiple sources - Alex Edwards (2023), community consensus (2024–2026)<br/>
+
+**Organize by FEATURE, not by LAYER.**
+
+.notes
+This is arguably the MOST POPULAR layout for new Go web services in 2025–2026.
+.notes.end
+
+.===============================================================================
+.TITLE{Feature-Based - Layer vs Feature}
+
+**Layer-based (avoid):**
+```shell
+internal/
+├── handlers/       # all HTTP handlers mixed together
+├── services/       # all business logic mixed together
+├── models/         # all data types mixed together
+└── repositories/   # all database code mixed together
+```
+
+.transition
+
+.TITLE{Feature-Based - Layer vs Feature}
+
+**Feature-based (prefer):**
+```shell
+internal/
+├── user/           # everything about users
+│   ├── handler.go
+│   ├── service.go
+│   ├── repository.go
+│   └── model.go
+├── book/           # everything about books
+│   ├── handler.go
+│   ├── service.go
+│   ├── repository.go
+│   └── model.go
+└── platform/       # shared infrastructure only
+    ├── database/
+    └── middleware/
+```
+
+.===============================================================================
+.TITLE{Feature-Based - Directory structure}
+
+```shell
+.
+├── cmd/
+│   └── server/
+│       └── main.go
+├── internal/
+│   ├── user/
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   ├── book/
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   ├── review/
+│   │   ├── handler.go
+│   │   ├── service.go
+│   │   ├── repository.go
+│   │   └── model.go
+│   └── platform/
+│       ├── database/
+│       └── middleware/
+└── go.mod
+```
+
+.===============================================================================
+.TITLE{Feature-Based - Repository interface}
+
+```go
+// internal/user/repository.go
+package user
+
+import "context"
+
+type Repository interface {
+    ByID(ctx context.Context, id int) (User, error)
+    All(ctx context.Context) ([]User, error)
+    Create(ctx context.Context, u User) error
+}
+```
+
+.===============================================================================
+.TITLE{Feature-Based - Service}
+
+```go
+// internal/user/service.go
+package user
+
+import "context"
+
+type Service struct {
+    Repo Repository
+}
+
+func (s *Service) User(ctx context.Context, id int) (User, error) {
+    return s.Repo.ByID(ctx, id)
+}
+```
+
+.===============================================================================
+.TITLE{Feature-Based - Handler (Go 1.22+)}
+
+```go
+// internal/user/handler.go
+package user
+
+import (
+    "encoding/json"
+    "net/http"
+)
+
+type Handler struct {
+    Service *Service
+}
+
+func (h *Handler) Routes() map[string]http.HandlerFunc {
+    return map[string]http.HandlerFunc{
+        "GET /users":      h.list,
+        "GET /users/{id}": h.get,
+        "POST /users":     h.create,
+    }
+}
+
+func (h *Handler) get(w http.ResponseWriter, r *http.Request) {
+    id := r.PathValue("id")   // Go 1.22+
+    user, _ := h.Service.User(r.Context(), atoi(id))
+    json.NewEncoder(w).Encode(user)
+}
+```
+
+.===============================================================================
+.TITLE{Feature-Based - Composition root}
+
+```go
+// cmd/server/main.go
+package main
+
+import (
+    "net/http"
+    "github.com/example/internal/user"
+    "github.com/example/internal/book"
+    "github.com/example/internal/platform/database"
+)
+
+func main() {
+    db := database.MustOpen("connection")
+
+    userRepo := user.NewPostgresRepository(db)
+    userSvc := user.NewService(userRepo)
+    userHandler := user.NewHandler(userSvc)
+
+    mux := http.NewServeMux()
+    for pattern, handler := range userHandler.Routes() {
+        mux.HandleFunc(pattern, handler)
+    }
+
+    // ....
+    http.ListenAndServe(":8080", mux)
+}
+```
+
+.===============================================================================
+.TITLE{Feature-Based - When it works}
+
+- Medium-to-large services with multiple distinct features
+- Teams where different developers own different features
+- Each feature independently understandable
+- Microservice candidates - each feature folder could become its own service
+
+.===============================================================================
+.TITLE{Feature-Based - When it breaks}
+
+- Cross feature concerns (e.g., "borrow book" touches user and book)
+- Small applications - overhead of multiple packages
+- Requires discipline to keep `platform/` clean
+
+.===============================================================================
+.TITLE{Feature-Based - 2026 perspective}
+
+> "You want to isolate or enforce a boundary between the package code and the rest of your project."
+> - Alex Edwards, "11 Tips for Structuring Your Go Projects"
+
+> "A good mental model is: domain folders group behavior by feature rather than by layer."
+> - Community consensus (2024–2025)

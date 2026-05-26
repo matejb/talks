@@ -1,0 +1,41 @@
+.===============================================================================
+.TITLE{Comparison - Side by side}
+
+| Layout | Complexity | Best For |
+|--------|:----------:|----------|
+| Flat | ⭐ | Prototypes, CLIs |
+| Ben Johnson | ⭐⭐ | Small to medium services |
+| William Kennedy | ⭐⭐⭐ | Enterprise services |
+| Bourgon (pkg/) | ⭐⭐ | Monorepos (legacy) |
+| Standard Layout | ⭐⭐⭐⭐ | Large complex projects |
+| Feature-Based | ⭐⭐⭐ | Multi-feature services, DDD |
+| Hexagonal | ⭐⭐⭐⭐⭐ | Enterprise services, DDD, Java like |
+| Monorepo | ⭐⭐⭐⭐ | Multi-service, multi team, shared libs |
+
+.===============================================================================
+.TITLE{Universal principles}
+
+Regardless of layout choice (according to me!):
+
+1. **Start simple** - add structure when you feel pain, not before
+
+.transition
+
+2. **Use `cmd/`** for entry points when you have multiple binaries
+3. **Use `internal/`** if you **can't / won't** offer stabile libraries
+
+.transition
+
+4. **Keep dependency arrows pointing inward** - domain shouldn't know about HTTP or Postgres
+5. **Binary entry point eq. `main.go` wires everything** - dependency injection at the composition root
+
+.transition
+
+6. **Organize by domain**, not by technical layer - `user/`, `book/`, not `handlers/`, `models/`
+7. **Test from the outside** - test behavior, not structure
+
+.notes
+You can MIX these approaches - hexagonal inside a monorepo,
+feature-based with flat sub-packages, etc.
+The universal principles are more important than any specific layout choice.
+.notes.end

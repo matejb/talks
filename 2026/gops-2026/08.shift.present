@@ -1,0 +1,40 @@
+.===============================================================================
+.TITLE{The 2020–2026 shift}
+
+New approaches emerged since 2019 when first version of this talk was done.
+
+Some prominent ones:
+- Feature-Based / Domain-Driven layout
+- Hexagonal inspired layout
+
+.===============================================================================
+.TITLE{Timeline}
+
+```shell
+2016  Ben Johnson, Peter Bourgon, William Kennedy publish approaches
+ │
+2018  golang-standards/project-layout becomes popular
+ │    Go 1.11 introduces modules (preview)
+ │
+2019  First version of this talk
+ │
+2021  Go 1.16 modules are enabled by default
+ │    GOPATH is dead, pkg/ loses meaning
+ │
+2022  Go 1.18 generics, workspaces (go.work)
+ │    Multi-module monorepos become practical
+ │
+2024  Go 1.22 - stdlib HTTP enhanced routing patterns Eliminates 3rd-party routers
+ │    Feature-based / domain-driven layouts gain momentum
+ │
+2026  This talk!
+```
+
+.===============================================================================
+.TITLE{What changed?}
+
+1. **Go Modules (2019)** - `pkg/` largely unnecessary; packages already namespaced by module path
+2. **`go.work` (2022)** - multi-module monorepos practical - new layout patterns
+3. **Go 1.22 ServeMux (2024)** - no more 3rd-party routers - simpler handler organization
+4. **Community maturity** - 10 years of seeing what works and what doesn't
+5. **Hexagonal / DDD patterns** - proven in Java/C#, now adapted (carefully) for Go

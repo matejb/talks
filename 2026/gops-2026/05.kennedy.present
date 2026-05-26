@@ -1,0 +1,129 @@
+.===============================================================================
+.TITLE{Layout #3 WK - Package-Oriented Design}
+
+William Kennedy from Ardian Labs "Package-Oriented Design" (2017)
+
+.notes
+Very popular in enterprise Go.
+The internal/ directory is enforced by the Go compiler.
+.notes.end
+
+.===============================================================================
+.TITLE{Kennedy - Directory structure}
+
+```shell
+.
+├── cmd/
+│   └── library/
+│       └── main.go
+├── internal/
+│   ├── platform/
+│   │   ├── database/
+│   │   │   └── postgres.go
+│   │   └── http/
+│   │       └── server.go
+│   ├── users/
+│   │   ├── model.go
+│   │   └── service.go
+│   ├── books/
+│   │   ├── model.go
+│   │   └── service.go
+│   └── reviews/
+│       ├── model.go
+│       └── service.go
+└── go.mod
+```
+
+.===============================================================================
+.TITLE{Kennedy - Three layers of packages}
+
+**1. Domain packages** (`internal/users/`, `internal/books/`, `internal/reviews/`)
+- Business logic, models, service interfaces
+- The core of the application
+
+.transition
+
+**2. Platform packages** (`internal/platform/`)
+- Foundational, reusable infrastructure - database, HTTP server, middleware
+- NOT business-specific
+
+.transition
+
+**3. Composition root** (`cmd/library/`)
+- Wires domain and platform together
+
+.===============================================================================
+.TITLE{Kennedy - Domain package}
+
+```go
+// internal/users/model.go
+package users
+
+type User struct {
+    ID    int
+    Name  string
+    Email string
+}
+```
+
+```go
+// internal/users/service.go
+package users
+
+import "database/sql"
+
+type Service struct {
+    DB *sql.DB
+}
+
+func (s *Service) User(id int) (User, error) {
+    return User{}, nil
+}
+```
+
+.===============================================================================
+.TITLE{Kennedy - Platform & composition root}
+
+```go
+// internal/platform/database/postgres.go
+package database
+
+import "database/sql"
+
+func Open(connString string) (*sql.DB, error) {
+    return sql.Open("postgres", connString)
+}
+```
+
+```go
+// cmd/library/main.go
+package main
+
+import (
+    "log"
+    "os"
+    "github.com/example/internal/platform/database"
+    "github.com/example/internal/users"
+)
+
+func main() {
+    db, _ := database.Open(os.Getenv("DB"))
+    userService := users.Service{DB: db}
+    // ... wire handlers, start server
+}
+```
+
+.===============================================================================
+.TITLE{Kennedy - When it works}
+
+- Medium-to-large applications
+- In multi team with multi repo setup `internal/` enforces boundaries
+- Enterprise/Corporate Go
+
+.===============================================================================
+.TITLE{Kennedy - When it breaks}
+
+- `internal/platform/` can become a "junk drawer"
+- Domain packages **may** eq. directly import `database/sql`, nothing is preventing "infrastructure" to leak into domain
+- No prescribed way to **share** common libraries between repos
+- Overkill for small services

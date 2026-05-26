@@ -1,0 +1,5 @@
+.title(Go Project Structures — 2026 Edition)
+.global.font-size(5svh)
+.global.hide.page.number
+.global.aspect-ratio-min(16x9)
+.global.aspect-ratio-max(16x10)
