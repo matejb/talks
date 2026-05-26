@@ -2,6 +2,13 @@
 
 ## 2026
 
+- Go Project Structures
+  ```
+  go install github.com/oktalz/present@latest
+  present -g github.com/matejb/talks -d 2026/gops-2026
+  ```
+  See [talk readme](2026/gops-2026/README.md) for more info.
+
 - Circus of fire and ash
   ```
   go install github.com/oktalz/present@v1.5.3

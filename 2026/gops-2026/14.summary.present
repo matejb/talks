@@ -46,6 +46,16 @@
 - Lucas de Ataides - [Why Clean Architecture Struggles in Golang](https://dev.to/lucasdeataides/why-clean-architecture-struggles-in-golang-and-what-works-better-m4g)
 
 .===============================================================================
+.TITLE{Layout examples}
+
+.center
+.image(assets/github_barcode.png)
+.center.end
+.center
+[github.com/matejb/talks/2026/gops-2026/layouts-examples](https://github.com/matejb/talks/tree/master/2026/gops-2026/layouts-examples)
+.center.end
+
+.===============================================================================
 .TITLE{Closing quote}
 
 .center
